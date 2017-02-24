@@ -6,7 +6,8 @@ import sqlite3
 from Team import Team
 
 # list of all nba team ids on espn
-NBA = ['phi', 'ny']
+NBA = ['phi', 'ny', 'atl', 'bos', 'bkn', 'cha', 'chi', 'cle', 'dal', 'den', 'det', 'gsw', 'hou', 'ind', 'lac', 'lal', 'mem', 'mia', 'mil']
+NBA.extend(['min', 'no', 'okc', 'orl', 'pho', 'por', 'sac', 'sas', 'tor', 'utah', 'was'])
 
 def main():
     teamId = 0
