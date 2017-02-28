@@ -28,7 +28,7 @@ def main():
         scrapeStats(team, soup)
 
         # write to a database
-        conn = sqlite3.connect('databaseofTeams.db')
+        conn = sqlite3.connect('../Database/databaseofTeams.db')
         c = conn.cursor()
 
         writeTeam(team, c)
@@ -68,14 +68,14 @@ def scrapeStats(t, soup):
             rows[row] = rows[row][18:]
             t.setAPG(float(rows[row]))
 
-def writeTeam(t, connection):
+def writeTeam(t, cursor):
     teamId = t.getTeamId()
     name = t.getName()
     PPG = t.getPPG()
     RPG = t.getRPG()
     APG = t.getAPG()
     # insert row of data
-    connection.execute('''INSERT INTO Teams
+    cursor.execute('''INSERT INTO Teams
                                 VALUES(?, ?, ?, ?, ?)''',(teamId, name, PPG, RPG, APG))
 
 main()

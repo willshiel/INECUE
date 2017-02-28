@@ -2,7 +2,7 @@ import sqlite3
 from Team import Team
 
 def main():
-    conn = sqlite3.connect('databaseOfTeams.db')
+    conn = sqlite3.connect('../Database/databaseOfTeams.db')
 
     c = conn.cursor()
 
@@ -10,9 +10,6 @@ def main():
 
     # fetches team from the database
     databaseTeam = c.fetchall()
-
-    # close database access
-    c.close()
 
     # creates the team objects
     t1 = createHomeTeam(databaseTeam)
@@ -36,25 +33,30 @@ def main():
         print t2.getName()
         print abs(spread)
 
+    writeToDatabase(t1.getName(), t2.getName(), spread, c)
+
+    conn.commit()
+    conn.close()
+
 
 def createHomeTeam(dbTeam):
     # Assign home team to object
     homeTeam = Team()
-    homeTeam.setTeamId(dbTeam[0][0])
-    homeTeam.setName(dbTeam[0][1])
-    homeTeam.setPPG(dbTeam[0][2])
-    homeTeam.setRPG(dbTeam[0][3])
-    homeTeam.setAPG(dbTeam[0][4])
+    homeTeam.setTeamId(dbTeam[12][0])
+    homeTeam.setName(dbTeam[12][1])
+    homeTeam.setPPG(dbTeam[12][2])
+    homeTeam.setRPG(dbTeam[12][3])
+    homeTeam.setAPG(dbTeam[12][4])
     return homeTeam
 
 def createAwayTeam(dbTeam):
     # Assign away team to object
     awayTeam = Team()
-    awayTeam.setTeamId(dbTeam[1][0])
-    awayTeam.setName(dbTeam[1][1])
-    awayTeam.setPPG(dbTeam[1][2])
-    awayTeam.setRPG(dbTeam[1][3])
-    awayTeam.setAPG(dbTeam[1][4])
+    awayTeam.setTeamId(dbTeam[13][0])
+    awayTeam.setName(dbTeam[13][1])
+    awayTeam.setPPG(dbTeam[13][2])
+    awayTeam.setRPG(dbTeam[13][3])
+    awayTeam.setAPG(dbTeam[13][4])
     return awayTeam
 
 # gets the disparity in PPG
@@ -74,5 +76,9 @@ def getAssists(t1, t2):
         return 2.0
     else:
         return -2.0
+
+def writeToDatabase(homeTeam, awayTeam, spread, cursor):
+    noResult = 'No Result Yet'
+    cursor.execute('''INSERT INTO Results VALUES(?, ?, ?, ?, ?)''',(1, homeTeam, awayTeam, spread, noResult))
 
 main()
