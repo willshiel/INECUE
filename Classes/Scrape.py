@@ -12,6 +12,7 @@ NBA.extend(['min', 'no', 'okc', 'orl', 'pho', 'por', 'sac', 'sas', 'tor', 'utah'
 def main():
     teamId = 0
     for team in NBA:
+        print team
         response = urllib2.urlopen('http://www.espn.com/nba/team/stats/_/name/' + team)
         html = response.read()
 

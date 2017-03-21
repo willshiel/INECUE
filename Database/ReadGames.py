@@ -2,7 +2,7 @@ import sqlite3
 conn = sqlite3.connect('DatabaseOfTeams.db')
 
 c = conn.cursor()
-date = '2272017'
+date = '3162017'
 
 openFile = open('Games/{0}.txt'.format(date), 'r')
 myFile = openFile.readlines()
@@ -32,6 +32,6 @@ for matchup in range(0, len(splitMatchup) - 1):
 writeFile = open('../Classes/Games/{0}.txt'.format(date), 'w+')
 # writes to the file
 for item in storedMatchups:
-    writeFile.write('{0},{1}|'.format(item[0], item[1]))
+    writeFile.write('{0}^{1}|'.format(item[0], item[1]))
 
 conn.close()
