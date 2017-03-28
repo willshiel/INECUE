@@ -6,6 +6,7 @@ class Team:
     PPG = 0.0
     APG = 0.0
     RPG = 0.0
+    FGP = 0.0
 
     # getters and setters for team fields
     def setTeamId(self, teamId):
@@ -32,6 +33,10 @@ class Team:
         self.RPG = RPG
     def getRPG(self):
         return self.RPG
+    def setFGP(self, FGP):
+        self.FGP = FGP
+    def getFGP(self):
+        return self.FGP
 
     # to string for visual representation
     def __str__(self):

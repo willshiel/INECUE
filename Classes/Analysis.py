@@ -39,18 +39,9 @@ def main():
 
         t2 = createAwayTeam(databaseTeam[0][0], databaseTeam)
 
-        # initializes the spread
-        spread = 0.0
+        # evaluates each team's predicted PPG based on linear model
+        spread = abs(t2.getPPG() - t1.getPPG())
 
-        # finds the disparity in PPG and assigns to spread
-        spread = getPoints(t1, t2)
-
-        # apply rebound and assist advantage
-        spread += getRebounds(t1, t2)
-        spread += getAssists(t1, t2)
-
-        # apply home court advantage
-        spread += 3.0
         # find the team that has the better score
         if spread < 0:
             print "{0} is the winner and the spread is {1}".format(t2.getName(), abs(spread))

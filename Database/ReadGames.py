@@ -31,6 +31,7 @@ for matchup in range(0, len(splitMatchup) - 1):
 # opens file to write matchups to
 writeFile = open('../Classes/Games/{0}.txt'.format(date), 'w+')
 # writes to the file
+print storedMatchups
 for item in storedMatchups:
     writeFile.write('{0}^{1}|'.format(item[0], item[1]))
 

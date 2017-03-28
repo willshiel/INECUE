@@ -56,6 +56,7 @@ def scrapeStats(t, soup):
     rows = str(table.findAll('tr', attrs={'class':'total'}))
     # get the totals row from the table
     rows = rows.split('</td>')
+    print rows
     # set the fields in the object
     for row in range(0, len(rows)):
         # if a row is ppg, rpg, or apg
