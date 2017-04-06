@@ -40,4 +40,4 @@ class Team:
 
     # to string for visual representation
     def __str__(self):
-        return "Id: " + str(self.teamId) + "\nName: " + self.name + "\nPPG: " + str(self.PPG) + "\nAPG: " + str(self.APG) + "\nRPG: " + str(self.RPG)
+        return "Id: " + str(self.teamId) + "\nName: " + self.name + "\nPPG: " + str(self.PPG) + "\nAPG: " + str(self.APG) + "\nRPG: " + str(self.RPG) + "\nFGP: " + str(self.FGP)

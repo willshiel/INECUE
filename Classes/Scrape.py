@@ -12,7 +12,6 @@ NBA.extend(['min', 'no', 'okc', 'orl', 'pho', 'por', 'sac', 'sas', 'tor', 'utah'
 def main():
     teamId = 0
     for team in NBA:
-        print team
         response = urllib2.urlopen('http://www.espn.com/nba/team/stats/_/name/' + team)
         html = response.read()
 
@@ -28,6 +27,8 @@ def main():
         scrapeName(team, soup)
         scrapeStats(team, soup)
 
+        team.setFGP(scrapeFGP(team, soup))
+
         # write to a database
         conn = sqlite3.connect('../Database/databaseofTeams.db')
         c = conn.cursor()
@@ -36,8 +37,6 @@ def main():
 
         conn.commit()
         conn.close()
-
-        print team
 
 # parse for information and apply it to object fields
 def scrapeID(t, teamId):
@@ -56,7 +55,6 @@ def scrapeStats(t, soup):
     rows = str(table.findAll('tr', attrs={'class':'total'}))
     # get the totals row from the table
     rows = rows.split('</td>')
-    print rows
     # set the fields in the object
     for row in range(0, len(rows)):
         # if a row is ppg, rpg, or apg
@@ -70,14 +68,25 @@ def scrapeStats(t, soup):
             rows[row] = rows[row][18:]
             t.setAPG(float(rows[row]))
 
+# scrapes the field goal percentage from bottom table
+def scrapeFGP(t, soup):
+    # get shooting data table
+    table = soup.findAll('table')[1]
+    rows = str(table.findAll('tr', attrs={'class':'total'}))
+    rows = rows.split('</td>')
+    for row in range(0, len(rows)):
+        if row is 3:
+            return rows[row][19:]
+
 def writeTeam(t, cursor):
     teamId = t.getTeamId()
     name = t.getName()
     PPG = t.getPPG()
     RPG = t.getRPG()
     APG = t.getAPG()
+    FGP = t.getFGP()
     # insert row of data
     cursor.execute('''INSERT INTO Teams
-                                VALUES(?, ?, ?, ?, ?)''',(teamId, name, PPG, RPG, APG))
+                                VALUES(?, ?, ?, ?, ?, ?)''',(teamId, name, PPG, RPG, APG, FGP))
 
 main()
