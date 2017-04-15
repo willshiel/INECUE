@@ -40,8 +40,15 @@ def main():
         t2 = createAwayTeam(databaseTeam[0][0], databaseTeam)
 
         # evaluates each team's predicted PPG based on linear model
-        spread = abs(t2.getPPG() - t1.getPPG())
+        print t1.getName() + "'s field goal percentage is: " + str(t1.getFGP())
+        print t2.getName() + "'s field goal percentage is: " + str(t2.getFGP())
+        t1PredictedPoints = ((11856 * t1.getFGP()) + 3058) / 82
+        t2PredictedPoints = ((11856 * t2.getFGP()) + 3058) / 82
 
+        #print t1.getName() + " will score this amount of points: " + str(t1PredictedPoints)
+        #print t2.getName() + " will score this amount of points: " + str (t2PredictedPoints)
+
+        spread = t1PredictedPoints - t2PredictedPoints
         # find the team that has the better score
         if spread < 0:
             print "{0} is the winner and the spread is {1}".format(t2.getName(), abs(spread))
@@ -62,6 +69,7 @@ def createHomeTeam(idNum, dbTeam):
     homeTeam.setPPG(dbTeam[0][2])
     homeTeam.setRPG(dbTeam[0][3])
     homeTeam.setAPG(dbTeam[0][4])
+    homeTeam.setFGP(dbTeam[0][5]/1000)
     return homeTeam
 
 def createAwayTeam(idNum, dbTeam):
@@ -72,6 +80,7 @@ def createAwayTeam(idNum, dbTeam):
     awayTeam.setPPG(dbTeam[0][2])
     awayTeam.setRPG(dbTeam[0][3])
     awayTeam.setAPG(dbTeam[0][4])
+    awayTeam.setFGP(dbTeam[0][5]/1000)
     return awayTeam
 
 # gets the disparity in PPG

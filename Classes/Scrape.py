@@ -80,6 +80,7 @@ def scrapeFGP(t, soup):
 
 def writeTeam(t, cursor):
     teamId = t.getTeamId()
+    print teamId
     name = t.getName()
     PPG = t.getPPG()
     RPG = t.getRPG()
